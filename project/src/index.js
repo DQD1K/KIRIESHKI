@@ -1,13 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import "mafs/core.css";
+
+import { Mafs, Coordinates, Plot } from "mafs"
+
+
+
+
+function HelloFx() {
+  return (
+    <Mafs viewBox={{ x: [0, 10], y: [0, 10] }}
+    zoom={{ min: 0.1, max: 2 }}>
+      
+      <Coordinates.Cartesian />
+      <Plot.OfX y={(x) => x*x*x/5} />
+    </Mafs>
+  )
+}
+
 
 
 class App extends React.Component{
   render (){
     return (
       <div className = 'Game'>
-        <canvas height={600} width={800}>Hi</canvas>
-        <input placeholder='Высота' type='number' />
+        
+        <input placeholder='Высота' type='number' id='height' />
+        <input placeholder='Скорость' type='number' id='velocity' />
+        <input type='submit' />
+        <div id = "game"></div>
+        <HelloFx/>
       </div>
     )
   }
@@ -16,18 +38,3 @@ class App extends React.Component{
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
-
-const canvas = document.querySelector('canvas');
-const ctx = canvas.getContext('2d');
-
-ctx.translate(0, canvas.height); //Разварачиваю систему координат до классической
-ctx.rotate(-Math.PI/2);          //
-
-const a = 10;
-
-ctx.clearRect(0, 0, canvas.width, canvas.height);
-for (var i = 0; i <= 100000; i += 0.2) {
-  ctx.lineTo(i, i*a);           //нарисовать линию от точки страрта до конечной точки
-  ctx.moveTo(i, i*a);           //передвинуть точку старта 
-}
-ctx.stroke(); // обводка
